@@ -35,3 +35,4 @@ local.properties
 *.launch
 garmin-uploader.log
 /src/main/resources/garmin-uploader.properties
+/db/
