@@ -6,6 +6,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
+import codist.garmin.uploader.activity.Activity;
+import codist.garmin.uploader.activity.ActivityService;
 import codist.garmin.uploader.filereader.FileReader;
 import codist.garmin.uploader.stravaclient.StravaHttpClient;
 
@@ -15,6 +17,9 @@ public class FileReaderTask {
 
 	@Autowired
 	private FileReader fileReader;
+	
+	@Autowired
+	private ActivityService activityService;
 	
 	@Autowired
 	private StravaHttpClient stravaHttpClient;
@@ -28,10 +33,15 @@ public class FileReaderTask {
 	
 	@Scheduled(fixedDelay=50000)
 	public void uploadAvailableFitFiles() {
-	    logger.debug("Starting to upload files" );
+	    logger.info("Starting to upload files" );
 	    
-	    stravaHttpClient.getActivities().forEach((x) -> { logger.info("Activity {}", x); });
+	    stravaHttpClient.getActivities().forEach((activity) -> { storeActivity(activity); });
 	    
+	}
+	
+	private void storeActivity(final codist.garmin.uploader.stravaclient.model.Activity stravaActivity) {
+		final Activity activity = new Activity(stravaActivity.getExternalId(), stravaActivity.getId(), stravaActivity.getName());
+		activityService.save(activity);
 	}
 
 }

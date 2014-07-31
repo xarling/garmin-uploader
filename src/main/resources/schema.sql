@@ -1,8 +1,5 @@
-CREATE DATABASE garminuploader;
+DELETE activity;
 
-CREATE TABLE `author` (
-  `id` int NOT NULL,
-  `first_name` varchar(255) DEFAULT NULL,
-  `last_name` varchar(255) DEFAULT NULL,
-  PRIMARY KEY (`id`)
-);
+CREATE TABLE IF NOT EXISTS activity (id INT PRIMARY KEY AUTO_INCREMENT NOT NULL, strava_id INT NOT NULL, external_id varchar(255), name varchar(255));
+
+CREATE INDEX IF NOT EXISTS idx_activity_name ON activity(name);

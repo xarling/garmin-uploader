@@ -2,7 +2,7 @@ package codist.garmin.uploader.stravaclient.model;
 
 public class Activity {
 	
-	private Integer id;
+	private Long id;
 	
 	/**
 	 * indicates level of detail
@@ -47,11 +47,11 @@ public class Activity {
 	 */
 	private String type;
 
-	public Integer getId() {
+	public Long getId() {
 		return id;
 	}
 
-	public void setId(Integer id) {
+	public void setId(Long id) {
 		this.id = id;
 	}
 
