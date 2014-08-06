@@ -1,15 +1,20 @@
 package codist.garmin.uploader.activity;
 
-import org.springframework.stereotype.Repository;
+import org.springframework.data.repository.CrudRepository;
+
 
 /**
  * @author Xander Arling
  *
  */
-@Repository
-public interface ActivityRepository extends org.springframework.data.repository.CrudRepository<Activity, Long> {
+interface ActivityRepository extends CrudRepository<Activity, Long> {
 	
 	
-	 
+	 /**
+	  * Find activity by strava id, which is unique for strava
+	 * @param stravaId
+	 * @return
+	 */
+	public Activity findByStravaId(final Long stravaId);
 
 }

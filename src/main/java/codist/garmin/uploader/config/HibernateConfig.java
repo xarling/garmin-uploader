@@ -4,16 +4,18 @@ import java.util.Properties;
 
 import javax.sql.DataSource;
 
-import org.hibernate.SessionFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.orm.hibernate4.HibernateTransactionManager;
 import org.springframework.orm.hibernate4.LocalSessionFactoryBean;
 
 import com.jolbox.bonecp.BoneCPDataSource;
 
+/**
+ * Don't specify a transactionmanager here. Spring Boot already supplies one.
+ * @author Xander Arling
+ *
+ */
 @Configuration
 public class HibernateConfig {
 	
@@ -29,8 +31,6 @@ public class HibernateConfig {
 	@Value("${db.driver}")
 	private String dbPassword;
 
-	@Value("${jooq.sql.dialect}")
-	private String jooqDialect;
 
 	@Value("${db.schema.script}")
 	private String dbSchemaScript;
@@ -39,7 +39,7 @@ public class HibernateConfig {
 	public LocalSessionFactoryBean sessionFactory() {
 		LocalSessionFactoryBean sessionFactory = new LocalSessionFactoryBean();
 		sessionFactory.setDataSource(dataSource());
-		sessionFactory.setPackagesToScan(new String[] { "org.baeldung.spring.persistence.model" });
+		sessionFactory.setPackagesToScan(new String[] { "codist.garmin.uploader" });
 		sessionFactory.setHibernateProperties(hibernateProperties());
 
 		return sessionFactory;
@@ -57,15 +57,6 @@ public class HibernateConfig {
 		return dataSource;
 	}
 
-	@Bean
-	@Autowired
-	public HibernateTransactionManager transactionManager(SessionFactory sessionFactory) {
-		HibernateTransactionManager txManager = new HibernateTransactionManager();
-		txManager.setSessionFactory(sessionFactory);
-
-		return txManager;
-	}
-
 
 	Properties hibernateProperties() {
 		
@@ -78,6 +69,9 @@ public class HibernateConfig {
 
 			{
 				setProperty("hibernate.hbm2ddl.auto", "validate");
+				setProperty("show_sql", "true");
+				setProperty("format_sql", "true");
+				setProperty("use_sql_comments", "true");
 				setProperty("hibernate.dialect", "org.hibernate.dialect.H2Dialect");
 				setProperty("hibernate.globally_quoted_identifiers", "true");
 			}

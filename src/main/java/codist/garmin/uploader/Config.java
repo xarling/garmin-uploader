@@ -1,4 +1,4 @@
-package codist.garmin.uploader.config;
+package codist.garmin.uploader;
 
 import org.jboss.jandex.Main;
 import org.slf4j.Logger;
@@ -12,12 +12,14 @@ import org.springframework.context.annotation.PropertySource;
 import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 
+import codist.garmin.uploader.config.RestClientConfig;
+
 @Configuration
 @EnableScheduling
 @EnableTransactionManagement
 @EnableAutoConfiguration
 @PropertySource("classpath:garmin-uploader.properties")
-@ComponentScan("codist.garmin.uploader")
+@ComponentScan
 @Import({RestClientConfig.class})
 public class Config {
 

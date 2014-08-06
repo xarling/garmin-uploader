@@ -29,7 +29,7 @@ public class StravaActivityCheckerTask {
 	/**
 	 * 
 	 */
-	@Scheduled(fixedDelay=50000)
+	@Scheduled(fixedDelay=5000000)
 	public void uploadAvailableFitFiles() {
 	    logger.info("Starting to upload files" );
 	    stravaHttpClient.getActivities().forEach((activity) -> { storeActivity(activity); });
@@ -41,7 +41,7 @@ public class StravaActivityCheckerTask {
 	 */
 	private void storeActivity(final codist.garmin.uploader.stravaclient.model.Activity stravaActivity) {
 		final Activity activity = new Activity(stravaActivity.getExternalId(), stravaActivity.getId(), stravaActivity.getName());
-		activityService.save(activity);
+		activityService.saveNotExistingActivity(activity);
 	}
 
 	public ActivityService getActivityService() {

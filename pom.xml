@@ -6,12 +6,12 @@
 	<groupId>codist</groupId>
 	<artifactId>garmin-uploader</artifactId>
 	<version>0.0.1</version>
-	
+
 	<properties>
 		<bonecp.version>0.8.0.RELEASE</bonecp.version>
 		<quartz.version>2.2.1</quartz.version>
 	</properties>
-	
+
 
 	<parent>
 		<groupId>org.springframework.boot</groupId>
@@ -19,7 +19,7 @@
 		<version>1.1.4.RELEASE</version>
 	</parent>
 
-	
+
 	<dependencies>
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
@@ -58,7 +58,14 @@
 			<artifactId>slf4j-api</artifactId>
 		</dependency>
 
-	
+		<dependency>
+			<groupId>com.garmin</groupId>
+			<artifactId>fit</artifactId>
+			<version>1.0</version>
+			<scope>system</scope>
+			<systemPath>${project.basedir}/lib/fit.jar</systemPath>
+		</dependency>
+
 
 		<!-- <dependency> <groupId>org.jooq</groupId> <artifactId>jooq</artifactId> 
 			<version>${jooq.version}</version> </dependency> -->
@@ -122,10 +129,7 @@
 			<plugin>
 				<artifactId>maven-compiler-plugin</artifactId>
 				<version>2.3.2</version>
-				<!-- <configuration>
-					<source>1.8</source>
-					<target>1.4</target>
-				</configuration> -->
+				<!-- <configuration> <source>1.8</source> <target>1.4</target> </configuration> -->
 			</plugin>
 			<plugin>
 				<groupId>org.springframework.boot</groupId>
