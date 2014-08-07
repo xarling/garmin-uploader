@@ -40,7 +40,6 @@ public class ActivityService {
 	 */
 	@Transactional(readOnly=false)
 	public Activity saveNotExistingActivity(final Activity activity) {
-
 		logger.info("save activity that doesn't exists");
 		if (!exists(activity)) {
 			return save(activity);
@@ -58,7 +57,6 @@ public class ActivityService {
 	 */
 	private boolean exists(final Activity activity) {
 		final Activity existing = activityRepository.findByStravaId(activity.getStravaId());
-		
 		return existing != null;
 	}
 	

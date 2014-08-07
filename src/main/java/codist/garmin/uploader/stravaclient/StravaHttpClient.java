@@ -32,9 +32,7 @@ public class StravaHttpClient {
 	private String restToken;
 	
 	public String getToken() {
-		
 		ResponseEntity<String> response = restTemplate.exchange(athleteInfo, HttpMethod.GET, createAuthenticationEntity(), String.class);
-		
 		return response.getBody();
 	}
 	

@@ -1,4 +1,4 @@
-package codist.garmin.uploader.filereader;
+package codist.garmin.uploader.fit.filereader;
 
 import java.io.File;
 import java.util.ArrayList;

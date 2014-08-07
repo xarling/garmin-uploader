@@ -8,7 +8,7 @@ import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 
-import codist.garmin.uploader.filereader.FileReader;
+import codist.garmin.uploader.fit.filereader.FileReader;
 
 @RunWith(MockitoJUnitRunner.class)
 public class FileReaderTaskTest {
@@ -21,7 +21,7 @@ public class FileReaderTaskTest {
 	@Before
 	public void before() {
 		fileReaderTask = new FileReaderTask();
-		fileReaderTask.setFileReader(fileReader);
+		//fileReaderTask.setFileReader(fileReader);
 	}
 	
 	@Test
