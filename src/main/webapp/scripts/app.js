@@ -11,6 +11,10 @@ angular.module('garminUploader').config(['$stateProvider', '$urlRouterProvider',
       url: "/home",
       templateUrl: "views/home.html"
     })
+    .state('activities', {
+    	url: "/activities",
+    	templateUrl: "views/activities.html"
+    })
     .state('newuser', {
       url: "/newuser",
       templateUrl: "views/newuser.html",
