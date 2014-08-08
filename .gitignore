@@ -7,7 +7,7 @@
 hs_err_pid*
 
 *target*
-*.jar
+#*.jar
 *.war
 *.ear
 *.class
