@@ -1,13 +1,16 @@
 package codist.garmin.uploader.fit;
 
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
-import javax.persistence.Transient;
+
+import org.hibernate.annotations.Parameter;
+import org.hibernate.annotations.Type;
 
 import codist.garmin.uploader.user.User;
 
@@ -39,10 +42,12 @@ public class FitFile {
 	private Short avgHeartBpm;
 	
 	@Column(name="TIME_CREATED")
-	private LocalDate timeCreated;
+	@Type(type = "org.jadira.usertype.dateandtime.PersistentLocalDateTime")
+	private LocalDateTime timeCreated;
 	
 	@Column(name="START_TIME")
-	private LocalDate startTime;
+	@Type(type = "org.jadira.usertype.dateandtime.PersistentLocalDateTime")
+	private LocalDateTime startTime;
 	
 	@Column(name="PRODUCT_ID")
 	private String productId;
@@ -53,9 +58,13 @@ public class FitFile {
 	@Column(name="SPORT")
 	private String sport;
 	
-	@Transient
-	//@OneToMany(mappedBy="FitFile")
+	@OneToMany(mappedBy="FitFile")
 	private User user;
+	
+	@Column(name="STATUS")
+	@Type(type = "org.jadira.usertype.corejava.PersistentEnum",
+			parameters = {@Parameter(name = "FitStatus", value = "codist.garmin.uploader.fit.FitStatus")})
+	private FitStatus status;
 	
 	public FitFile() {
 		
@@ -130,11 +139,11 @@ public class FitFile {
 		this.avgHeartBpm = avgHeartBpm;
 	}
 
-	public LocalDate getTimeCreated() {
+	public LocalDateTime getTimeCreated() {
 		return timeCreated;
 	}
 
-	public void setTimeCreated(LocalDate timeCreated) {
+	public void setTimeCreated(LocalDateTime timeCreated) {
 		this.timeCreated = timeCreated;
 	}
 
@@ -163,13 +172,23 @@ public class FitFile {
 	}
 
 
-	public LocalDate getStartTime() {
+	public LocalDateTime getStartTime() {
 		return startTime;
 	}
 
 
-	public void setStartTime(LocalDate startTime) {
+	public void setStartTime(LocalDateTime startTime) {
 		this.startTime = startTime;
+	}
+
+
+	public FitStatus getStatus() {
+		return status;
+	}
+
+
+	public void setStatus(FitStatus status) {
+		this.status = status;
 	}
 	
 

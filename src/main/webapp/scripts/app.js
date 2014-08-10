@@ -1,8 +1,8 @@
 'use strict';
 
-angular.module('garminUploader', ['ui.router', 'ui.bootstrap', 'lodash']);
+angular.module('garminUploader', ['ui.router', 'ui.bootstrap', 'lodash', 'ngResource']);
 
-angular.module('garminUploader').config(['$stateProvider', '$urlRouterProvider', '$locationProvider', function ($stateProvider, $urlRouterProvider, $locationProvider) {
+angular.module('garminUploader').config(['$stateProvider', '$urlRouterProvider', '$locationProvider', '$resourceProvider', function ($stateProvider, $urlRouterProvider, $locationProvider, $resourceProvider) {
 
 	$urlRouterProvider.otherwise("/home");
 
@@ -12,6 +12,7 @@ angular.module('garminUploader').config(['$stateProvider', '$urlRouterProvider',
       templateUrl: "views/home.html"
     })
     .state('activities', {
+    	controller: "ActivityController",
     	url: "/activities",
     	templateUrl: "views/activities.html"
     })

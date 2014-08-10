@@ -10,6 +10,8 @@
 	<properties>
 		<bonecp.version>0.8.0.RELEASE</bonecp.version>
 		<quartz.version>2.2.1</quartz.version>
+		<jadira.version>3.2.0.GA</jadira.version>
+		<threeten.version>1.0</threeten.version>
 	</properties>
 
 
@@ -45,6 +47,17 @@
 			<groupId>com.jolbox</groupId>
 			<artifactId>bonecp</artifactId>
 			<version>${bonecp.version}</version>
+		</dependency>
+
+		<dependency>
+			<groupId>org.jadira.usertype</groupId>
+			<artifactId>usertype.extended</artifactId>
+			<version>${jadira.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.threeten</groupId>
+			<artifactId>threetenbp</artifactId>
+			<version>${threeten.version}</version>
 		</dependency>
 
 

@@ -5,7 +5,6 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.time.Instant;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 
@@ -66,6 +65,7 @@ public class FitFileParser {
 
 		FitFile fitFile = fileListener.getFitFile();
 		fitFile.setName(file.getName());
+		fitFile.setStatus(FitStatus.FILE_ON_DISK);
 		fitFile.setUploaded(false);
 		return fitFile;
 	}
@@ -90,7 +90,7 @@ public class FitFileParser {
 			fitFile.setTotalTimeInSeconds(mesg.getTotalTimerTime().doubleValue());
 			fitFile.setSport(mesg.getSport().name());
 			Instant instant = Instant.ofEpochMilli(mesg.getStartTime().getDate().getTime());
-			LocalDate res = LocalDateTime.ofInstant(instant, ZoneId.systemDefault()).toLocalDate();
+			LocalDateTime res = LocalDateTime.ofInstant(instant, ZoneId.systemDefault());
 
 			fitFile.setStartTime(res);
 

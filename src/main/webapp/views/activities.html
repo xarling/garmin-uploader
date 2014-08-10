@@ -1,1 +1,24 @@
-activities
+
+<table class="table table-hover">
+	<thead>
+		<tr>
+			<th>Name</th>
+			<th>Uploaded to Strava</th>
+			<th>Total time in s</th>
+			<th>Avg speed in m/s</th>
+			<th>Distance in m</th>
+			<th>Start time</th>
+		</tr>
+	</thead>
+
+	<tbody>
+		<tr ng-repeat="activity in activities">
+			<td><span ng-bind="activity.name"></span></td>
+			<td><span ng-bind="activity.uploaded"></span></td>
+			<td><span ng-bind="activity.total_time_in_seconds"></span></td>
+			<td><span ng-bind="activity.avg_speed_in_meters_per_second"></span></td>
+			<td><span ng-bind="activity.total_distance_in_meters"></span></td>
+			<td>{{activity.start_time.day_of_week}} {{activity.start_time.day_of_month}} {{activity.start_time.month_of_year}} {{activity.start_time.year}} {{activity.start_time.hour}}:{{activity.start_time.minute}}</span></td>
+		</tr>
+	</tbody>
+</table>
