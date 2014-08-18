@@ -1,10 +1,13 @@
-package codist.garmin.uploader.activity;
+package codist.garmin.uploader.service;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import codist.garmin.uploader.model.Activity;
+import codist.garmin.uploader.repository.ActivityRepository;
 
 /**
  * @author Xander Arling
@@ -21,6 +24,8 @@ public class ActivityService {
 	public Iterable<Activity> findAll() {
 		return activityRepository.findAll();
 	}
+	
+	
 	
 	/**
 	 * Save an activity

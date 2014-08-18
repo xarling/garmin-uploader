@@ -6,7 +6,9 @@ html {
 body {
 	background: white;
 	padding-top: 70px; 
+	padding-bottom: 70px; 
 	font-family: 'Ubuntu', sans-serif;
+	font-size: 1.3em;
 }
 
 .white {
@@ -28,9 +30,15 @@ form.red-bg {
 }
 
 
+a.active {
+	color: red;
+}
+
 a {
   cursor: pointer;
 }
+
+
 
 .navbar-default .navbar-nav>li>a:hover,.navbar-default .navbar-nav>li>a:focus {
     color: #a00 !important;

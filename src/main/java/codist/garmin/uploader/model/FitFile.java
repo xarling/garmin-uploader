@@ -1,22 +1,43 @@
-package codist.garmin.uploader.fit;
+package codist.garmin.uploader.model;
 
 import java.time.LocalDateTime;
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
-import javax.persistence.OneToMany;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
-import org.hibernate.annotations.Parameter;
+import org.hibernate.annotations.Fetch;
 import org.hibernate.annotations.Type;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
-import codist.garmin.uploader.user.User;
+import com.fasterxml.jackson.annotation.JsonBackReference;
 
 @Entity
 @Table(name="FIT_FILE")
 public class FitFile {
+	
+	private static final Logger logger = LoggerFactory.getLogger(FitFile.class);
+	
+	private static final Map<FitStatus, List<FitStatus>> allowedStateChanges = new HashMap<>();
+	
+	static {
+		allowedStateChanges.put(FitStatus.FILE_ON_DISK, Arrays.asList(FitStatus.MARKED_FOR_UPLOAD_TO_STRAVA));
+		allowedStateChanges.put(FitStatus.MARKED_FOR_UPLOAD_TO_STRAVA, Arrays.asList(FitStatus.CANNOT_UPLOAD_TO_STRAVA));
+		allowedStateChanges.put(FitStatus.CANNOT_UPLOAD_TO_STRAVA, Arrays.asList(FitStatus.MARKED_FOR_UPLOAD_TO_STRAVA, FitStatus.CANNOT_UPLOAD_TO_STRAVA, FitStatus.UPLOADED_TO_STRAVA));
+		allowedStateChanges.put(FitStatus.MARKED_FOR_UPLOAD_TO_STRAVA, Arrays.asList(FitStatus.UPLOADING_TO_STRAVA));
+		allowedStateChanges.put(FitStatus.UPLOADING_TO_STRAVA, Arrays.asList(FitStatus.UPLOADED_TO_STRAVA, FitStatus.CANNOT_UPLOAD_TO_STRAVA));
+	}
+
 	
 	@Id
 	@GeneratedValue
@@ -42,11 +63,11 @@ public class FitFile {
 	private Short avgHeartBpm;
 	
 	@Column(name="TIME_CREATED")
-	@Type(type = "org.jadira.usertype.dateandtime.PersistentLocalDateTime")
+	@Type(type = "org.jadira.usertype.dateandtime.threeten.PersistentLocalDateTime")
 	private LocalDateTime timeCreated;
 	
 	@Column(name="START_TIME")
-	@Type(type = "org.jadira.usertype.dateandtime.PersistentLocalDateTime")
+	@Type(type = "org.jadira.usertype.dateandtime.threeten.PersistentLocalDateTime")
 	private LocalDateTime startTime;
 	
 	@Column(name="PRODUCT_ID")
@@ -58,18 +79,42 @@ public class FitFile {
 	@Column(name="SPORT")
 	private String sport;
 	
-	@OneToMany(mappedBy="FitFile")
+	@ManyToOne
+	@Fetch(org.hibernate.annotations.FetchMode.JOIN)
+	@JoinColumn(name="USER_ID")
+	@JsonBackReference
 	private User user;
 	
 	@Column(name="STATUS")
-	@Type(type = "org.jadira.usertype.corejava.PersistentEnum",
-			parameters = {@Parameter(name = "FitStatus", value = "codist.garmin.uploader.fit.FitStatus")})
+	@javax.persistence.Enumerated(EnumType.STRING)
 	private FitStatus status;
+	
+	@Column(name="STRAVA_ID")
+	private Long stravaId;
+	
+	
 	
 	public FitFile() {
 		
 	}
 	
+	public void changeStatus(FitStatus newStatus) {
+		if (statusChangeAllowed(newStatus)) {
+			setStatus(newStatus);
+		} else {
+			logger.error("Not allowed to change status from {} to {}", getStatus(), newStatus);
+			throw new FitStatusChangeNotAllowedException();
+		}
+	}
+	
+	public boolean statusChangeAllowed(FitFile newFitFile) {
+		return statusChangeAllowed(newFitFile.getStatus());
+	}
+	
+	public boolean statusChangeAllowed(FitStatus status) {
+		final List<FitStatus> allowed = allowedStateChanges.get(this.getStatus());
+		return allowed.contains(status);
+	}
 	
 	public FitFile(final String name) {
 		this.name = name;
@@ -189,6 +234,14 @@ public class FitFile {
 
 	public void setStatus(FitStatus status) {
 		this.status = status;
+	}
+
+	public Long getStravaId() {
+		return stravaId;
+	}
+
+	public void setStravaId(Long stravaId) {
+		this.stravaId = stravaId;
 	}
 	
 

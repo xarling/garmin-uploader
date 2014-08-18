@@ -8,9 +8,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
-import codist.garmin.uploader.fit.FitFile;
 import codist.garmin.uploader.fit.FitFileParser;
-import codist.garmin.uploader.fit.FitService;
+import codist.garmin.uploader.model.FitFile;
+import codist.garmin.uploader.service.FitService;
 
 /**
  * Tasks checks the disk for new activities in the fit directory 

@@ -12,6 +12,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.client.ClientHttpRequestFactory;
 import org.springframework.http.client.HttpComponentsClientHttpRequestFactory;
+import org.springframework.http.converter.FormHttpMessageConverter;
 import org.springframework.http.converter.HttpMessageConverter;
 import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
 import org.springframework.web.client.RestTemplate;
@@ -19,6 +20,7 @@ import org.springframework.web.client.RestTemplate;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.PropertyNamingStrategy;
+import com.fasterxml.jackson.datatype.hibernate4.Hibernate4Module;
 
 @Configuration
 public class RestClientConfig {
@@ -34,6 +36,14 @@ public class RestClientConfig {
 		final HttpClientBuilder httpClient = HttpClientBuilder.create();
 		httpClient.setConnectionManager(connectionManager());
 		return httpClient.build();
+	}
+	
+	@Bean
+	public Hibernate4Module hibernate4Module() {
+		Hibernate4Module hibernate4Module = new Hibernate4Module();
+		hibernate4Module.disable(Hibernate4Module.Feature.FORCE_LAZY_LOADING);
+		// hibernate4Module.disable(Hibernate4Module.Feature.FORCE_LAZY_LOADING);
+		return hibernate4Module;
 	}
 
 	@Bean
@@ -62,13 +72,19 @@ public class RestClientConfig {
 		ObjectMapper objectMapper = new ObjectMapper();
 		objectMapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
 		objectMapper.setPropertyNamingStrategy(PropertyNamingStrategy.CAMEL_CASE_TO_LOWER_CASE_WITH_UNDERSCORES);
+		objectMapper.registerModule(hibernate4Module());
 		return objectMapper;
 	}
 		
 	@Bean
 	public RestTemplate restTemplate() {
 		RestTemplate restTemplate = new RestTemplate(requestFactory());
+		
+		HttpMessageConverter<?> formHttpMessageConverter = new FormHttpMessageConverter();
+		//HttpMessageConverter stringHttpMessageConverternew = new StringHttpMessageConverter();
+		
 		List<HttpMessageConverter<?>> converters = new ArrayList<>();
+		converters.add(formHttpMessageConverter);
 		converters.add(jacksonMessageConverter());
 		restTemplate.setMessageConverters(converters);
 		return restTemplate;

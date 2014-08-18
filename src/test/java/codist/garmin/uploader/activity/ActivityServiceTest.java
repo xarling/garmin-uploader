@@ -8,6 +8,10 @@ import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 
+import codist.garmin.uploader.model.Activity;
+import codist.garmin.uploader.repository.ActivityRepository;
+import codist.garmin.uploader.service.ActivityService;
+
 @RunWith(MockitoJUnitRunner.class)
 public class ActivityServiceTest {
 

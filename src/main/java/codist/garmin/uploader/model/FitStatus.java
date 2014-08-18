@@ -1,0 +1,10 @@
+package codist.garmin.uploader.model;
+
+public enum FitStatus {
+	
+	
+	
+	FILE_ON_DISK, TRIED_TO_UPLOAD_TO_STRAVA, CANNOT_UPLOAD_TO_STRAVA, UPLOADING_TO_STRAVA, UPLOADED_TO_STRAVA, MARKED_FOR_UPLOAD_TO_STRAVA;
+	
+
+}

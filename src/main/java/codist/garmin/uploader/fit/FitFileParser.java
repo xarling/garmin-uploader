@@ -12,6 +12,9 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 
+import codist.garmin.uploader.model.FitFile;
+import codist.garmin.uploader.model.FitStatus;
+
 import com.garmin.fit.Decode;
 import com.garmin.fit.FileIdMesg;
 import com.garmin.fit.FileIdMesgListener;

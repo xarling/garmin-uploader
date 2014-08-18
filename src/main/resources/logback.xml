@@ -3,7 +3,8 @@
 
 	<appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
 		<encoder>
-			<pattern>%-4relative [%thread] %-5level %logger{35} - %msg%n</pattern>
+			<pattern>%-4relative [%thread] %-5level %logger{35} - %msg%n
+			</pattern>
 		</encoder>
 	</appender>
 
@@ -14,26 +15,27 @@
 			<maxHistory>30</maxHistory>
 		</rollingPolicy>
 		<encoder>
-			<pattern>%-4relative [%thread] %-5level %logger{35} - %msg%n</pattern>
+			<pattern>%-4relative [%thread] %-5level %logger{35} - %msg%n
+			</pattern>
 		</encoder>
 	</appender>
-	
+
 	<logger name="codist.garmin.uploader">
-        <level value="DEBUG" />
-    </logger>
-    
-    <logger name="org.springframework">
-        <level value="INFO" />
-    </logger>
-    
-    <logger name="org.hibernate.SQL">
-     	<level value="DEBUG" />
-    </logger>
-    
-    <!-- <logger name="org.hibernate.type">
-    	<level value="TRACE"/>
-    </logger> -->
-    
+		<level value="DEBUG" />
+	</logger>
+
+	<logger name="org.springframework">
+		<level value="INFO" />
+	</logger>
+
+	<!-- <logger name="org.apache.http"> <level value="ERROR" /> </logger> <logger 
+		name="org.apache.http.wire"> <level value="ERROR" /> </logger> -->
+	<logger name="org.hibernate.SQL">
+		<level value="DEBUG" />
+	</logger>
+
+	<!-- <logger name="org.hibernate.type"> <level value="TRACE"/> </logger> -->
+
 	<root level="INFO">
 		<appender-ref ref="FILE" />
 		<appender-ref ref="STDOUT" />

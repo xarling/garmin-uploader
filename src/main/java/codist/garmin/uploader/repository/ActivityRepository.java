@@ -1,13 +1,15 @@
-package codist.garmin.uploader.activity;
+package codist.garmin.uploader.repository;
 
 import org.springframework.data.repository.CrudRepository;
+
+import codist.garmin.uploader.model.Activity;
 
 
 /**
  * @author Xander Arling
  *
  */
-interface ActivityRepository extends CrudRepository<Activity, Long> {
+public interface ActivityRepository extends CrudRepository<Activity, Long> {
 	
 	
 	 /**

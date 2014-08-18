@@ -1,9 +1,12 @@
-package codist.garmin.uploader.activity;
+package codist.garmin.uploader.model;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 
@@ -33,6 +36,10 @@ public class Activity {
 	@Column(name="name")
 	private String name;
 	
+	@ManyToOne(fetch=FetchType.EAGER)
+	@JoinColumn(name="USER_ID")
+	private User user;
+	
 	public Activity() {
 		
 	}
@@ -45,10 +52,11 @@ public class Activity {
 	 * @param stravaId
 	 * @param name
 	 */
-	public Activity(final String externalId, final Long stravaId, final String name) {
+	public Activity(final String externalId, final Long stravaId, final String name, final Long userId) {
 		this.setName(name);
 		this.externalId = externalId;
 		this.stravaId = stravaId;
+		this.user = new User(userId);
 	}
 
 	public Long getId() {
@@ -86,6 +94,14 @@ public class Activity {
 	@Override
 	public String toString() {
 		return "Activity [id=" + id + ", externalId=" + externalId + ", stravaId=" + stravaId + ", name=" + name + "]";
+	}
+
+	public User getUser() {
+		return user;
+	}
+
+	public void setUser(User user) {
+		this.user = user;
 	}
 	
 	

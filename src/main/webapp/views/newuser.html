@@ -1,1 +1,48 @@
-newuser
+
+<div class="row">
+	<div class="col-md-8">
+
+		<div class="panel panel-default">
+			<div class="panel-heading">Current Strava users</div>
+			<table class="table table-hover">
+				<thead>
+					<tr>
+						<th>Name</th>
+						<th>Access token</th>
+						<th>Connect</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr ng-repeat="user in users">
+						<td>{{user.username}}</td>
+						<td>{{user.access_token}}</td>
+						<td><a ng-click="connectWithStrava(user.id)"><img src="img/ConnectWithStrava.png" /></a></td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+	</div>
+
+	<div class="col-md-4">
+		<div class="panel panel-default">
+			<div class="panel-heading">Create new user</div>
+			<div class="panel-body">
+				<form role="form" novalidate="novalidate" name="userForm"
+					ng-submit="submit(userForm.$valid)">
+					<div class="form-group"
+						ng-class="{'error' : userForm.username.$invalid && submitted}">
+						<label for="username">Username</label> <input type="text"
+							ng-model="user.username" class="form-control" id="username"
+							placeholder="Enter username" ng-required="true">
+					</div>
+					<button type="submit" class="btn btn-success pull-right"
+						ng-disabled="sendBtnDisabled">
+						<span ng-show="sendBtnDisabled"
+							ng-class="{ 'icon-refresh-animate': sendButtonDisabled}"
+							class="glyphicon glyphicon-repeat ng-hide"></span> Create user
+					</button>
+				</form>
+			</div>
+		</div>
+	</div>
+</div>

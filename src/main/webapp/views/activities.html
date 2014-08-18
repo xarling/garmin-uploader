@@ -1,24 +1,77 @@
+<div class="panel panel-default">
+	<div class="panel-heading">Activities on computer</div>
+	<table class="table table-hover">
+		<thead>
+			<tr>
+				<th>Name</th>
+				<!-- <th>Uploaded to Strava</th> -->
+				<th>Total time</th>
+				<th>Avg speed</th>
+				<th>Distance</th>
+				<th>Start time</th>
+				<th>Status</th>
+				<th>User</th>
+				<th>Actions</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr ng-repeat="activity in activities">
+				<td><span ng-bind="activity.name"></span></td>
+				<!-- <td><span ng-bind="activity.uploaded"></span></td> -->
+				<td><span
+					ng-bind="{{(activity.total_time_in_seconds / 60).toFixed(2)}}"></span>
+					min</td>
+				<td><span
+					ng-bind="{{(activity.avg_speed_in_meters_per_second * 3.6).toFixed(2)}}"></span>
+					min/km</td>
+				<td><span
+					ng-bind="{{(activity.total_distance_in_meters / 1000).toFixed(2)}}">
+						km</span></td>
+				<td>{{activity.start_time}}</span>
+				</td>
+				<td>{{activity.status}}</span></td>
+				<td><span ng-bind="activity.user.username"></span></td>
+				<td>
+					<div class="dropdown"
+						ng-show="showSendToStravaBtn(activity.status)">
+						<button class="btn btn-default btn-sm dropdown-toggle"
+							type="button" id="uploads" data-toggle="dropdown">
+							Send to strava <span class="caret"></span>
+						</button>
+						<ul class="dropdown-menu" role="menu" aria-labelledby="uploads">
+							<li role="presentation"><a role="menuitem" tabindex="-1"
+								ng-click="sendToStrava(user, activity)"
+								ng-repeat="user in users">For {{user.username}}</a></li>
+						</ul>
+					</div>
 
-<table class="table table-hover">
-	<thead>
-		<tr>
-			<th>Name</th>
-			<th>Uploaded to Strava</th>
-			<th>Total time in s</th>
-			<th>Avg speed in m/s</th>
-			<th>Distance in m</th>
-			<th>Start time</th>
-		</tr>
-	</thead>
+					<div class="dropdown">
+						<button class="btn btn-default btn-sm dropdown-toggle"
+							type="button" id="changeStatus" data-toggle="changeStatus">
+							Change status <span class="caret"></span>
+						</button>
+						<ul class="dropdown-menu" role="menu"
+							aria-labelledby="changeStatus">
+							<li role="presentation"><a role="menuitem" tabindex="-1"
+								ng-click="changeStatus(status, activity)"
+								ng-repeat="status in states">To {{status}}</a></li>
+						</ul>
+					</div>
 
-	<tbody>
-		<tr ng-repeat="activity in activities">
-			<td><span ng-bind="activity.name"></span></td>
-			<td><span ng-bind="activity.uploaded"></span></td>
-			<td><span ng-bind="activity.total_time_in_seconds"></span></td>
-			<td><span ng-bind="activity.avg_speed_in_meters_per_second"></span></td>
-			<td><span ng-bind="activity.total_distance_in_meters"></span></td>
-			<td>{{activity.start_time.day_of_week}} {{activity.start_time.day_of_month}} {{activity.start_time.month_of_year}} {{activity.start_time.year}} {{activity.start_time.hour}}:{{activity.start_time.minute}}</span></td>
-		</tr>
-	</tbody>
-</table>
+					<div class="dropdown">
+						<button class="btn btn-default btn-sm dropdown-toggle"
+							type="button" id="changeUser" data-toggle="changeUser">
+							Change user <span class="caret"></span>
+						</button>
+						<ul class="dropdown-menu" role="menu" aria-labelledby="changeUser">
+							<li role="presentation"><a role="menuitem" tabindex="-1"
+								ng-click="changeUser(user, activity)" ng-repeat="user in users">To
+									{{user.username}}</a></li>
+						</ul>
+					</div>
+				</td>
+			</tr>
+		</tbody>
+	</table>
+</div>
+
